@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>Housingly Login</title>
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width" />
+<base href="/" />
+<link rel="stylesheet" type="text/css"
+	href="/webjars/bootstrap/css/bootstrap.min.css" />
+<script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+<script type="text/javascript"
+	src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/webjars/js-cookie/js.cookie.js"></script>
+
+<script type="text/javascript">
+	$.ajaxSetup({
+		beforeSend : function(xhr, settings) {
+			if (settings.type == 'POST' || settings.type == 'PUT'
+					|| settings.type == 'DELETE') {
+				if (!(/^http:.*/.test(settings.url) || /^https:.*/
+						.test(settings.url))) {
+					// Only send the token to relative URLs i.e. locally.
+					xhr.setRequestHeader("X-XSRF-TOKEN", Cookies
+							.get('XSRF-TOKEN'));
+				}
+			}
+		}
+	});
+
+	$.get("/user", function(data) {
+		$("#user").html(data.userAuthentication.details.name);
+		$(".unauthenticated").hide()
+		$(".authenticated").show()
+	});
+
+	var logout = function() {
+		$.post("/logout", function() {
+			$("#user").html('');
+			$(".unauthenticated").show();
+			$(".authenticated").hide();
+		})
+		return true;
+	}
+</script>
+</head>
+<body>
+	<div class="panel panel-primary"
+		style="max-width: 500px; margin-left: auto; margin-right: auto; margin-top: 5%;">
+		<div class="panel-heading">
+			<h3 class="panel-title text-center">Housingly Signin</h3>
+		</div>
+		<div class="panel-body"
+			style="max-width: 500px; margin-left: auto; margin-right: auto;">
+
+			<form action="" id="loginForm">
+				<div class="container">
+					<div class="row">
+						<div class="Absolute-Center is-Responsive">
+							<div id="logo-container"></div>
+							<div class="col-sm-8 col-md-6 col-md-offset-1">
+
+								<div class="form-group input-group col-md-6">
+									<span class="input-group-addon"><i
+										class="glyphicon glyphicon-user"></i></span> <input
+										class="form-control" type="text" name='username'
+										placeholder="username" />
+								</div>
+								<div class="form-group input-group col-md-6">
+									<span class="input-group-addon"><i
+										class="glyphicon glyphicon-lock"></i></span> <input
+										class="form-control" type="password" name='password'
+										placeholder="password" />
+								</div>
+								<div class="checkbox">
+									<label> <input type="checkbox"> I agree to the
+										<a href="#">Terms and Conditions</a>
+									</label>
+								</div>
+
+								<div class="form-group col-md-6">
+									<button type="button" class="btn btn-success btn-block">Login</button>
+								</div>
+								<br />
+								<br />
+
+
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-8 col-md-6 col-md-offset-1">
+							<div class="form-group col-md-6">
+								<a href="#">Forgot Password?</a>&nbsp;|&nbsp;<a href="#">Support</a>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-8 col-md-6 col-md-offset-1">
+							<div class="form-group col-md-6">
+								<a href="/login">Signin with Facebook</a> | <a href="#">Signin
+									with Google</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="panel-footer">
+			<p class="mt-5 mb-3 text-muted text-center">&copy; 2017-2018</p>
+		</div>
+	</div>
+
+
+
+
+	</form>
+
+
+
+
+
+
+
+
+	<!-- <h4>Housingly Login</h4>
+	<div class="container unauthenticated">
+		<a href="#">Create a new account</a><br /> <a href="/login">Signin
+			with Facebook</a> | <a href="#">Signin with Google</a>
+	</div> -->
+	<div class="container authenticated" style="display: none">
+		Welcome <span id="user"></span>
+		<div>
+			<button onClick="logout()" class="btn btn-primary">Logout</button>
+		</div>
+	</div>
+</body>
+</html>
