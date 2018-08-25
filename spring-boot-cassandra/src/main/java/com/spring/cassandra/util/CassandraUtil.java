@@ -2,7 +2,7 @@ package com.spring.cassandra.util;
 
 //@Configuration
 //@PropertySource(value = {"classpath:cassandra.properties"})
-public class CassandraUtil {
+/*public class CassandraUtil {*/
 /*
 	private static final String contactPoints = "cassandra.contactpoints";
 	private static final String port = "cassandra.port";
@@ -56,4 +56,4 @@ public class CassandraUtil {
 		return new CassandraTemplate(session().getObject());
 	}
 	*/
-}
+/*}*/
